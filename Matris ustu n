@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+int ** multiply ( int** A , int** B );
+int ** divide ( int ** A , int n ) ;
+void printArray ( int ** A ) ;
+int n ;
+int ** A = 0 ;
+int ** multiply ( int** A , int** B )
+{
+    int i , j , k ;
+    int ** C = new int *[ n ] ;
+    for ( i = 0 ; i < n ; i++ )
+    {
+        C [ i ] = new int [ n ] ;
+    }
+
+    for ( i = 0 ; i < n ; i++ )
+    {
+        for ( j = 0 ; j < n ; j++ )
+        {
+            C [ i ][ j ] = 0 ;
+            for ( k = 0 ; k < n ; k++ )
+            {
+                C [ i ][ j ] += A [ i ][ k] * B [ k ] [ j ] ;
+            }
+        }
+    }
+    return C ;
+}
+int ** divide ( int ** A , int n )
+{
+    if ( n == 2 )
+    {
+        return multiply( A , A ) ;
+    }
+    else if ( n % 2 == 0 )
+    {
+            return multiply( divide( A , n/2 ), divide ( A , n/2 ) ) ;
+    }
+    else if ( n % 2 == 1)
+    {
+        return multiply( A , divide ( A , n-1) ) ;
+    }
+    else
+    {
+        cout << "Noluyoooo :) " << endl ;
+    }
+}
+void printArray ( int ** A )
+{
+    int i ,j ;
+    for ( i = 0 ; i < n ; i ++ )
+    {
+        for ( j = 0 ; j < n ; j ++ )
+        {
+            cout << A [ i ] [ j ] ;
+        }
+        cout << endl ;
+    }
+}
+int main()
+{
+    cout << " Kaclik bir matrix olsun " << endl ;
+    cin >> n ;
+    int i ,j , m , t ;
+    A = new int * [ n ] ;
+    for ( i = 0 ; i < n ; i ++ )
+    {
+        A [ i ] = new int [ n ] ;
+    }
+    cout << " Matrix in ici hangi degerle dolsun " << endl ;
+    cin >> m ;
+    for ( i = 0 ; i < n ; i ++ )
+    {
+        for ( j = 0 ; j < n ; j++ )
+        {
+            A [ i ][ j ] = m ;
+        }
+    }
+    cout << " Matrix in ustu kac olsun  " << endl ;
+    cin >> t ;
+
+    printArray( divide ( A , t ) ) ;
+    return 0;
+
+}
